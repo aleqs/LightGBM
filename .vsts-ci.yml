@@ -2,6 +2,7 @@ trigger:
   branches:
     include:
     - master
+    - test-gpu-wheel
   tags:
     include:
     - v*
@@ -73,7 +74,7 @@ jobs:
   - bash: $(Build.SourcesDirectory)/.ci/test.sh
     displayName: Test
   - task: PublishBuildArtifacts@1
-    condition: and(succeeded(), in(variables['TASK'], 'regular', 'sdist', 'bdist', 'swig'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
+    condition: and(succeeded(), in(variables['TASK'], 'regular', 'sdist', 'bdist', 'swig'))
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: PackageAssets
@@ -140,7 +141,7 @@ jobs:
         /bin/bash $ROOT_DOCKER_FOLDER/docker-script.sh
     displayName: 'Setup and run tests'
   - task: PublishBuildArtifacts@1
-    condition: and(succeeded(), in(variables['TASK'], 'bdist'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
+    condition: and(succeeded(), in(variables['TASK'], 'bdist'))
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
       artifactName: PackageAssets
