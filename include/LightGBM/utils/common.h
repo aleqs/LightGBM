@@ -1200,7 +1200,7 @@ inline static std::vector<T> StringToArray(const std::string& str, char delimite
 */
 template <typename T>
 inline static void format_to_buf(char* buffer, const size_t buf_len, const char* format, const T value) {
-    auto result = fmt::format_to_n(buffer, buf_len, format, value);
+    auto result = fmt::format_to_n(buffer, buf_len, "{}", value);
     if (result.size >= buf_len) {
       Log::Fatal("Numerical conversion failed. Buffer is too small.");
     }
